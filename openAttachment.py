@@ -8,6 +8,31 @@
 
 from pywinauto import Application, Desktop
 import time
+import psutil
+import os 
+import wmi 
+
+def checkIfOutlookRunning(processname):
+    for proc in psutil.process_iter():
+        try:
+            if processname.lower() in proc.name().lower():
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+    return False;
+
+def killOutlook():
+    ti = 0
+    name = 'OUTLOOK.EXE'
+    f = wmi.WMI()
+
+    for process in f.Win32_Process():
+        if process.name == name:
+            process.Terminate()
+            ti +=1
+    if ti == 0:
+        print('Process not found!')
+
 
 def openEmailAttachment():
     #start the Outlook application
@@ -38,6 +63,12 @@ def openEmailAttachment():
     attachment = email_dlg.child_window(title="Attachments", control_type="Pane")
     attachment.Button25.click_input(double=True)
 
-    
+
 if __name__ == '__main__':
-    openEmailAttachment()
+    if (checkIfOutlookRunning('outlook.exe') == False):
+        openEmailAttachment()
+    else:
+        print('Outlook is currently running.')
+        killOutlook()
+        time.sleep(10)
+        openEmailAttachment()
