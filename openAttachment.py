@@ -12,6 +12,27 @@ import psutil
 import os 
 import wmi 
 
+def returnOutlookPID():
+    process_name = "OUTLOOK.EXE"
+    processID = None
+    for proc in psutil.process_iter():
+        if process_name in proc.name():
+            outlookPID = proc.pid
+            return (outlookPID)
+
+outlook = returnOutlookPID()
+
+def returnMicrosoftPID():
+    process_name = "WINWORD.EXE"
+    processID = None
+    for proc in psutil.process_iter():
+        if process_name in proc.name():
+            wordPID = proc.pid
+            return (wordPID)
+
+microsoftWord = returnMicrosoftPID()
+
+
 def checkIfOutlookRunning(processname):
     for proc in psutil.process_iter():
         try:
@@ -36,7 +57,11 @@ def killOutlook():
 
 def openEmailAttachment():
     #start the Outlook application
-    app = Application(backend="uia").start(r'C:\Program Files (x86)\Microsoft Office\root\Office16\OUTLOOK')
+    if (checkIfOutlookRunning('OUTLOOK.EXE') == True):
+        app = Application(backend="uia").connect(pid=outlook)
+    else:
+        app = Application(backend="uia").start(r'C:\Program Files (x86)\Microsoft Office\root\Office16\OUTLOOK')
+
     time.sleep(10)
     #Main application is presented as 'Outlook Today - Outlook'
     #Define the main dialogue
@@ -65,10 +90,4 @@ def openEmailAttachment():
 
 
 if __name__ == '__main__':
-    if (checkIfOutlookRunning('outlook.exe') == False):
-        openEmailAttachment()
-    else:
-        print('Outlook is currently running.')
-        killOutlook()
-        time.sleep(10)
-        openEmailAttachment()
+   openEmailAttachment()
