@@ -11,6 +11,8 @@ import time
 import psutil
 import os 
 import wmi 
+import win32gui
+import win32con 
 
 def returnOutlookPID():
     process_name = "OUTLOOK.EXE"
@@ -87,11 +89,21 @@ def openEmailAttachment():
     attachment.Button25.click_input(double=True)
 
 def openEmailOutlookRunning():
-    app = Application(backend="uia").connect(pid=outlook)
-    time.sleep(10)
+    app = Application(backend="uia").connect(process=outlook, visible_only=False)
+    time.sleep(5)
+    #need to make window visible for wrapper object
+    print("I've detected outlook running, here are the windows:")
+    print(app.windows())
+    nameOfWindow = 'Outlook Today - Outlook'
+    print("I'm now using win32gui to make the window visible")
+    window= win32gui.FindWindow(None,nameOfWindow)
+    win32gui.ShowWindow(window, win32con.SW_SHOWMAXIMIZED)
+    time.sleep(5)
     #Main application is presented as 'Outlook Today - Outlook'
     #Define the main dialogue
     main_dlg = app['Outlook Today - Outlook']
+    main_dlg.set_focus()
+    time.sleep(5)
     #Define the bth2 tree item in the left pane of outlook
     bth2_tree = main_dlg.child_window(title="BTH2", control_type="TreeItem")
     #Define the '2' subfolder in the bth2 folder.
