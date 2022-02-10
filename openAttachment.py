@@ -57,10 +57,8 @@ def killOutlook():
 
 def openEmailAttachment():
     #start the Outlook application
-    if (checkIfOutlookRunning('OUTLOOK.EXE') == True):
-        app = Application(backend="uia").connect(pid=outlook)
-    else:
-        app = Application(backend="uia").start(r'C:\Program Files (x86)\Microsoft Office\root\Office16\OUTLOOK')
+   
+    app = Application(backend="uia").start(r'C:\Program Files (x86)\Microsoft Office\root\Office16\OUTLOOK')
 
     time.sleep(10)
     #Main application is presented as 'Outlook Today - Outlook'
@@ -88,6 +86,36 @@ def openEmailAttachment():
     attachment = email_dlg.child_window(title="Attachments", control_type="Pane")
     attachment.Button25.click_input(double=True)
 
+def openEmailOutlookRunning():
+    app = Application(backend="uia").connect(pid=outlook)
+    time.sleep(10)
+    #Main application is presented as 'Outlook Today - Outlook'
+    #Define the main dialogue
+    main_dlg = app['Outlook Today - Outlook']
+    #Define the bth2 tree item in the left pane of outlook
+    bth2_tree = main_dlg.child_window(title="BTH2", control_type="TreeItem")
+    #Define the '2' subfolder in the bth2 folder.
+    treeItem_two = bth2_tree.child_window(title="2", control_type="TreeItem")
+    #Presents the email available in the 2 subfolder
+    treeItem_two.click_input(double=True)
+    time.sleep(5)
+    #The title of the outlook application has now changed after selected the '2' subfolder
+    #Redefine the main dialogue, as 'second dialogue'
+    second_dlg = app['2 - Sophos - Outlook']
+    time.sleep(5)
+    #Define the email, and open it. 
+    email = second_dlg.child_window(title="With Attachments, Subject Your flight has been successfully booked!, Received Mon 1/31, Size 136 KB, Flag Status Unflagged, ", control_type="DataItem")
+    email.click_input(double=True)
+    time.sleep(5)
+     
+    #The email is now opened, and defined as an interactive dialogue 
+    #The attachment is identified and opened. 
+    email_dlg = app['Your flight has been successfully booked! - Message (HTML) ']
+    attachment = email_dlg.child_window(title="Attachments", control_type="Pane")
+    attachment.Button25.click_input(double=True)
 
 if __name__ == '__main__':
-   openEmailAttachment()
+   if (checkIfOutlookRunning('OUTLOOK.EXE') == True):
+        openEmailOutlookRunning()
+   else:
+        openEmailAttachment()
