@@ -31,4 +31,5 @@ For killing an open process: https://www.geeksforgeeks.org/how-to-terminate-a-ru
 For determing if a process is running: https://thinktwisted.com/2020/06/19/how-to-check-is-a-program-or-process-is-running-in-python/
 
 ## Up Next:
-Automate the enabling of a malicious macro in a word document, retrieved from the email attachment. 
+1. Automating the UI variables presented based on applications opening for first time (prompting for office365 login, highlighting new features, etc.)
+2. Connecting to main UI element ('top window') every time during connection to running Outlook process.
