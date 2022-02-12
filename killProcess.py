@@ -1,3 +1,5 @@
+import wmi
+
 def killProcess(process):
     ti = 0
     name = process
