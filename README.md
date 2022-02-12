@@ -7,9 +7,9 @@
 
 ## About
 
-Run openAttachment.py to have 
-1. Outlook opened
-2. Simulate a person clicking through the interface to open email with attachment.
+Runing openAttachment.py has the following results:
+1. Outlook opens
+2. Simulates a person clicking through the interface to open email with attachment.
 3. The attachment opens, and a simulation of enabling the malicious macro occurs.
 4. Generates this threat graph in the Sophos Threat Analysis Center:
 
