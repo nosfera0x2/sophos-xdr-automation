@@ -5,6 +5,17 @@
 * Github: [@spence-rat](https://github.com/spence-rat)
 * LinkedIn: [@Spencer_Brown](https://www.linkedin.com/in/spencerbrowntx/)
 
+## About
+
+Run openAttachment.py to have 
+1. Outlook opened
+2. Simulate a person clicking through the interface to open email with attachment.
+3. The attachment opens, and a simulation of enabling the malicious macro occurs.
+4. Generates this threat graph in the Sophos Threat Analysis Center:
+
+![image](https://user-images.githubusercontent.com/82817752/153731638-4d2fcb2a-9d13-4c47-98d9-e23e5ef073fb.png)
+
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
