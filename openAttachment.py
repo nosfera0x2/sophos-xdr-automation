@@ -8,30 +8,10 @@
 
 from pywinauto import Application, Desktop
 import time
-import psutil
 import os 
-import wmi 
-
-def checkIfOutlookRunning(processname):
-    for proc in psutil.process_iter():
-        try:
-            if processname.lower() in proc.name().lower():
-                return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                pass
-    return False;
-
-def killOutlook():
-    ti = 0
-    name = 'OUTLOOK.EXE'
-    f = wmi.WMI()
-
-    for process in f.Win32_Process():
-        if process.name == name:
-            process.Terminate()
-            ti +=1
-    if ti == 0:
-        print('Process not found!')
+from processRunCheck import processRunCheck
+from killProcess import killProcess
+from enableMacro import enableMacro
 
 
 def openEmailAttachment():
@@ -65,10 +45,21 @@ def openEmailAttachment():
 
 
 if __name__ == '__main__':
-    if (checkIfOutlookRunning('outlook.exe') == False):
+
+    killProcess('WINWORD.EXE')
+
+    if (processRunCheck('outlook.exe') == False):
         openEmailAttachment()
+        time.sleep(10)
+        enableMacro()
+        
     else:
         print('Outlook is currently running.')
-        killOutlook()
+        print('I am now going to kill the Outlook Process.')
+        killProcess('OUTLOOK.EXE')
         time.sleep(10)
+        print('Outlook will now start.')
         openEmailAttachment()
+        time.sleep(10)
+        enableMacro()
+      
