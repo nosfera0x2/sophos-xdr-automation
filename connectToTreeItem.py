@@ -23,5 +23,4 @@ def connectToTreeItem():
     outlook_dlg = app[currentOutlookWindow]
     outlook_dlg.set_focus()
     outlook_dlg.BTH2.click_input()
-    #test_dlg.print_control_identifiers()
     outlook_dlg['2TreeItem'].click_input()
