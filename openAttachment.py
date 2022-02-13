@@ -33,15 +33,13 @@ def openEmailAttachment():
     second_dlg = app['2 - Sophos - Outlook']
     time.sleep(5)
     #Define the email, and open it. 
-    email = second_dlg.child_window(title="With Attachments, Subject Your flight has been successfully booked!, Received Mon 1/31, Size 136 KB, Flag Status Unflagged, ", control_type="DataItem")
+    email = second_dlg['Attachment With Attachments, Subject Your flight has been successfully booked!, Received Mon 1/31, Size 136 KB, Flag Status Unflagged, DataItem']
     email.click_input(double=True)
-    time.sleep(5)
-     
-    #The email is now opened, and defined as an interactive dialogue 
-    #The attachment is identified and opened. 
     email_dlg = app['Your flight has been successfully booked! - Message (HTML) ']
-    attachment = email_dlg.child_window(title="Attachments", control_type="Pane")
-    attachment.Button25.click_input(double=True)
+    #defines the attachment pane in the opened email message
+    attachment = email_dlg['AttachmentsPane']
+    attachment.AttachmentoptionsButton.click_input()
+    email_dlg.ContextMenu.Open.click_input()
 
 
 if __name__ == '__main__':
