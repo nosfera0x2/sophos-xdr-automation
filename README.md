@@ -25,10 +25,9 @@ The online documentation for this project can be found at the link below:
 https://pywinauto.readthedocs.io/en/latest/
 
 References:
-
 For killing an open process: https://www.geeksforgeeks.org/how-to-terminate-a-running-process-on-windows-in-python/
-
 For determing if a process is running: https://thinktwisted.com/2020/06/19/how-to-check-is-a-program-or-process-is-running-in-python/
+Sophos API: https://github.com/0xbennyv/2020-se-bootcamp-api-101
 
 ## Up Next:
 1. Automating the UI variables presented based on applications opening for first time (prompting for office365 login, highlighting new features, etc.)
