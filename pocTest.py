@@ -37,7 +37,7 @@ def setUpOutlook():
     dlg.AcceptButton.click_input()
     time.sleep(5)
     os.system('cmd /k "Powershell.exe -ExecutionPolicy Unrestricted -file C:\\Users\\spencer\\ProvisioningFiles\\scripts\\pstfile.ps1"')
-setUpOutlook() 
+
 
 def returnPID(process):
     process_name = process
