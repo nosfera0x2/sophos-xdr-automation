@@ -32,13 +32,9 @@ For determing if a process is running: https://thinktwisted.com/2020/06/19/how-t
 
 ## Up Next:
 1. Automating the UI variables presented based on applications opening for first time (prompting for office365 login, highlighting new features, etc.)
-2. Connecting to outlook if it is open, and navigating to the BTH2/2 subfolder consistently. 
+  1a. This has been done during the initial setup after install.
+  1b. This needs to also done in the event the image presented already has outlook (with profile imported) already present (an activation dialogue will always show    up).
 
-Need to make sure that the 2 subfolder is always visible, because the BTH2 folder has a chance of being expanded/unexpanded:
 
-
-![image](https://user-images.githubusercontent.com/82817752/153733757-79538bfb-5e2d-4202-b09b-f18e0dee7794.png)
-
-Possible by doing a if/else statement that searches through the print_control_identifiers to test for the '2 - Sophos - Outlook' item. 
 
 
