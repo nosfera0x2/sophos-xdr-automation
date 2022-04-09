@@ -37,15 +37,6 @@ def setUpOutlook():
     dlg.AcceptButton.click_input()
     time.sleep(5)
     os.system('cmd /k "Powershell.exe -ExecutionPolicy Unrestricted -file C:\\Users\\spencer\\ProvisioningFiles\\scripts\\pstfile.ps1"')
-
-
-def returnPID(process):
-    process_name = process
-    processID = None
-    for proc in psutil.process_iter():
-        if process_name in proc.name():
-            processID = proc.pid
-            return (processID)
             
 def processRunCheck(processname):
     for proc in psutil.process_iter():
@@ -81,23 +72,6 @@ def extractTitle(listitem):
 
 outlook = returnPID("OUTLOOK.EXE")
 
-
-def connectEmailAttachment():
-    app = Application(backend="uia").connect(process=outlook, visible_only=False)
-    time.sleep(5) #Need time for the activate office dialogue to appear. 
-    mainDLG= app['Outlook Today - Outlook'] #Main application is presented as 'Outlook Today - Outlook'
-    mainDLG['2TreeItem'].click_input() #Clicking 2 subTree of Sophos profile - changes window name.
-    time.sleep(5)
-    twoDLG = app['2 - Sophos - Outlook'] #New window name
-    time.sleep(5)
-    twoDLG['DeltaFlightItinerary.docm85 KB1 of 1 attachmentsUse alt + down arrow to open the options menu'].click_input(double=True) #opens the attachment
-
-#At this point, I'm running into a CIXA issue
-#Deleting file located at "C:\Users\spencer\AppData\Local\Microsoft\Windows\INetCache\Content.Outlook\8DX0TGNT\DeltaFlightItinerary.docm" 
-#Results in a Word cannot open the document: user does not have access privileges prompt to
-#I take this to mean CIXA has taken over here
-#Evidenced by detections in Central.
-
 def startEmailAttachment():
     
     app = Application(backend="uia").start(r'C:\\Program Files (x86)\\Microsoft Office\\root\\Office16\\OUTLOOK')
@@ -112,44 +86,34 @@ def startEmailAttachment():
     time.sleep(5)
     twoDLG['DeltaFlightItinerary.docm85 KB1 of 1 attachmentsUse alt + down arrow to open the options menu'].click_input(double=True) #opens the attachment
 
-#At this point, I'm running into a CIXA issue
-#Deleting file located at "C:\Users\spencer\AppData\Local\Microsoft\Windows\INetCache\Content.Outlook\8DX0TGNT\DeltaFlightItinerary.docm" 
-#Results in a Word cannot open the document: user does not have access privileges prompt to
-#I take this to mean CIXA has taken over here
-#Evidenced by detections in Central.
 
 def enableMacro():
-    #Connects to open microsoft word winow using regex, since window name is dynamic.
     app = Application(backend="uia").connect(title_re='.*DeltaFlightItinerary')
-    window = app.windows() #app.windows() returns a list object.
-    wordWindow = str(extractTitle(window[0])) #Extract title from list, and convert to string
-    print("I'm looking for the window..." + wordWindow)
-    guiWindow = win32gui.FindWindow(None,wordWindow) #Find our window with win32gui
-    win32gui.ShowWindow(guiWindow,win32con.SW_SHOWMAXIMIZED) #Maximize the window. 
-    main_dlg = app[wordWindow]
-    main_dlg.set_focus() #Make window visible for clicking inputs. 
-    main_dlg.EnableEditingButton.click_input() #Enable editing, pivots to enable content
+    time.sleep(5)
+    mainDLG = app.window(title_re="DeltaFlightItinerary*")
+    mainDLG['Enter a product key instead'].click_input()
+    productKeyDLG = mainDLG['Enter your product keyPane']
+    productKeyDLG.CloseButton.click_input()
+    mainDLG.EnableEditingButton.click_input() #Enable editing, pivots to enable content
     time.sleep(3)
-    main_dlg.EnableContentButton.click_input() #Enable content button
+    mainDLG.child_window(title="Enable Content", control_type="Button").click_input(double=True)
 
-connectEmailAttachment()
 
-#if __name__ == '__main__':
-    #openEmailAttachment()
-    #killProcess('WINWORD.EXE')
+if __name__ == '__main__':
+   
+    killProcess('WINWORD.EXE')
 
-    #if (processRunCheck('outlook.exe') == False):
-        #openEmailAttachment()
-        #time.sleep(10)
-        #enableMacro()
+    if (processRunCheck('outlook.exe') == False):
+        startEmailAttachment()
+        time.sleep(5)
+        enableMacro()
         
-    #else:
-        #print('Outlook is currently running.')
-        #print('I am now going to kill the Outlook Process.')
-        #killProcess('OUTLOOK.EXE')
-        #time.sleep(10)
-        #print('Outlook will now start.')
-        #openEmailAttachment()
-        #time.sleep(10)
-        #enableMacro()
-      
+    else:
+        print('Outlook is currently running.')
+        print('I am now going to kill the Outlook Process.')
+        killProcess('OUTLOOK.EXE')
+        time.sleep(5)
+        print('Outlook will now start.')
+        startEmailAttachment()
+        time.sleep(5)
+        enableMacro()
