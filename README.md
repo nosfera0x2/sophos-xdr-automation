@@ -1,5 +1,8 @@
 # Sophos XDR Automation Lab
 
+For Fellow Sophos Employees:
+pocTest.py is the final build of the script.
+
 ## Author
 
 * Github: [@spence-rat](https://github.com/spence-rat)
