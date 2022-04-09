@@ -61,17 +61,6 @@ def killProcess(process):
     if ti == 0:
         print('There are no running instances of ' + str(name))
         
-def extractTitle(listitem):
-    listitem = str(listitem)
-    pattern = r"'(.*?[^\\])'"
-    targetString = str(re.findall(pattern,listitem))
-    targetString1 = targetString.replace("[","")
-    targetString2 = targetString1.replace("]","")
-    nameOfWindow = targetString2.replace("'","")
-    print(nameOfWindow)
-
-outlook = returnPID("OUTLOOK.EXE")
-
 def startEmailAttachment():
     
     app = Application(backend="uia").start(r'C:\\Program Files (x86)\\Microsoft Office\\root\\Office16\\OUTLOOK')
