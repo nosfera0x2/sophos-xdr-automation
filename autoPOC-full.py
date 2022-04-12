@@ -64,9 +64,7 @@ outlook = returnPID("OUTLOOK.EXE")
 def startEmailAttachment():
     
     app = Application(backend="uia").connect(title_re='Outlook Today - Outlook')
-    time.sleep(5) #Need time for the activate office dialogue to appear. 
-    accountsDLG = app['Accounts']
-    accountsDLG.CloseButton.click_input()
+    time.sleep(5) #Need time for the activate office dialogue to appear.
     mainDLG= app['Outlook Today - Outlook'] #Main application is presented as 'Outlook Today - Outlook'
     mainDLG.sophosTreeItem.click_input(double=True)#Expand the Sophos profile tree
     sophosDLG = app['Sophos - Outlook']
@@ -99,18 +97,13 @@ if __name__ == '__main__':
         killProcess('WINWORD.EXE')
 
         if (processRunCheck('outlook.exe') == False):
-            setUpOutlook()
             time.sleep(10)
             startEmailAttachment()
             time.sleep(10)
             enableMacro()
         
         else:
-            print('Outlook is currently running.')
-            print('I am now going to kill the Outlook Process.')
-            #killProcess('OUTLOOK.EXE')
             time.sleep(5)
-            #print('Outlook will now start.')
             startEmailAttachment()
             time.sleep(5)
             enableMacro()
