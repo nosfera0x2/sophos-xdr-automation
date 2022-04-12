@@ -52,3 +52,21 @@ def SophosUI():
         dlg.child_window(title="Close", auto_id="NavBarCloseButton", control_type="Button").click_input()
 
 SophosUI()
+
+###To use when Sophos Agent hidden in system tray####
+#app = Application(backend="uia").connect(path="explorer.exe")
+#st = app.window(class_name="Shell_TrayWnd")
+#t = st.child_window(title="Notification Chevron").wrapper_object()
+#t.click()
+
+## Handle notify icon  overflow window ##
+
+#list_box = Application(backend="uia").connect(class_name="NotifyIconOverflowWindow")
+#list_box_win = list_box.window(class_name="NotifyIconOverflowWindow")
+#list_box_win.wait('visible', timeout=30, retry_interval=3)
+
+
+## Select required option from drop-down ##
+#ddm = desk.create_window(best_match="DropDownMenu")
+#desk.wait_for_window_to_appear(ddm, wait_for='ready', timeout=20, retry_interval=2)
+#ddm.child_window(title=<select option>, control_type="MenuItem").click_input()
