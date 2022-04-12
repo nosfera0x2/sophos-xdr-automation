@@ -63,7 +63,7 @@ outlook = returnPID("OUTLOOK.EXE")
 
 def startEmailAttachment():
     
-    app = Application(backend="uia").connect(title_re'Outlook Today - Outlook')
+    app = Application(backend="uia").connect(title_re='Outlook Today - Outlook')
     time.sleep(5) #Need time for the activate office dialogue to appear. 
     accountsDLG = app['Accounts']
     accountsDLG.CloseButton.click_input()
