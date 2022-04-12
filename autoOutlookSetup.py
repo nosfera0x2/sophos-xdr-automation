@@ -26,4 +26,5 @@ def setUpOutlook():
     dlg.AcceptButton.click_input()
     time.sleep(5)
     os.system('cmd /k "Powershell.exe -ExecutionPolicy Unrestricted -file C:\\threat\\pstfile.ps1"')
+    os.system('cmd /k "echo Outlook is Setup > c:\threat\outlookIsSetup"')
 setUpOutlook() 
