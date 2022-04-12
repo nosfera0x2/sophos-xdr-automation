@@ -9,8 +9,10 @@ pocTest.py is the final build of the script.
 * LinkedIn: [@Spencer_Brown](https://www.linkedin.com/in/spencerbrowntx/)
 
 ## About
+After a silent install of Office:
+1. Run autoOutlookSetup.py to launch Outlook for the first time, click through prompts and import .PST file.
 
-Runing openAttachment.py has the following results:
+Runing autoPOC.py has the following results:
 1. Outlook opens
 2. Simulates a person clicking through the interface to open email with attachment.
 3. The attachment opens, and a simulation of enabling the malicious macro occurs.
