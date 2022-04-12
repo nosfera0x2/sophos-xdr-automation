@@ -27,7 +27,7 @@ def setUpOutlook():
     time.sleep(10)
     os.system('cmd /k "Powershell.exe -ExecutionPolicy Unrestricted -file C:\\threat\\pstfile.ps1"')
     time.sleep(2)
-    os.system('cmd /k "touch c:\threat\outlookIsSetup"')
+    os.system('cmd /k "echo Outlook is Setup > c:\threat\outlookIsSetup"')
 
 def returnPID(process):
     process_name = process
