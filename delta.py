@@ -13,11 +13,11 @@ class pywinApp:
        
 
     def startapp(self):
-        app = pywinauto.Application(backend="uia").start(self.path)
+        app = pywinauto.Application(backend="uia").start(self.path,class_name="Outlook")
         return app
 
     def connectapp(self):  
-        app = pywinauto.Application(backend="uia").connect(path=self.path,visible_only=False)
+        app = pywinauto.Application(backend="uia").connect(path=self.path,visible_only=False,class_name="Outlook")
         return app
     
 
@@ -33,6 +33,21 @@ def check_window(filepath,string,dialogue_object):
     temp = sys.stdout
     sys.stdout = open(filepath,'w')
     print(dialogue_object.children())
+    sys.stdout = temp
+    with open(filepath, 'r') as file:
+        content = file.read()
+        if string in content:
+            print(f'Dialogue: {string} in {dialogue_object} located.')
+            return True
+        else:
+            print(f'Dialogue: {string} in {dialogue_object} not found.')
+            dialogue_object.print_control_identifiers()
+            return False
+
+def check_id(filepath,string,dialogue_object):
+    temp = sys.stdout
+    sys.stdout = open(filepath,'w',encoding="utf8")
+    print(dialogue_object.print_control_identifiers())
     sys.stdout = temp
     with open(filepath, 'r') as file:
         content = file.read()
@@ -57,14 +72,16 @@ sophos = outlook.child_window(title="Sophos", control_type="TreeItem")
 def revert_tree():
     global filepath
     global sophos
-    if check_window(filepath,"Atomic Red Team",sophos) == True:
-        sophos.click_input(double=True)
+    string = 'child_window(title="Inbox", control_type="TreeItem")'
+    dlg = outlook_app.window(title_re=".*Sophos*.")
+    if check_id(filepath,string,dlg) == True:
+        dlg.child_window(title="Inbox", control_type="TreeItem").click_input(double=True)
         print("Tree is reset")
     else:
         print("oops")
         pass
 
-
+revert_tree()
 
 
 
